@@ -9,7 +9,7 @@ class AccountAndTransactionController {
         req: Request, res: Response
     ) {
         const { cpfCnpj, name, password, status } = req.body;
-
+        console.log('cpfCnpj: ', cpfCnpj)
         const { statusHttp, data } = await this.accountAndTransactionService.createAccount(
             cpfCnpj, name, password, status
         );
@@ -18,6 +18,7 @@ class AccountAndTransactionController {
 
     async updateAccount(req: Request, res: Response) {
         const { cpfCnpj, name, password, status } = req.body;
+        console.log('cpfCnpj2: ', cpfCnpj)
         const { id } = req.params;
         const accountId = +id;
         const { statusHttp, data } = await this.accountAndTransactionService.updateAccount(
@@ -35,9 +36,10 @@ class AccountAndTransactionController {
     }
 
     async createTransaction(req: Request, res: Response) {
-        const { destinationAccountId, value, date } = req.body;
+        const { destinationAccountId, value } = req.body;
         const { id } = req.params;
         const originAccountId = +id;
+        const date = new Date();
         const { statusHttp, data } = await this.accountAndTransactionService
             .createTransaction(+originAccountId, destinationAccountId, value, date);
         return res.status(mapStatusHTTP(statusHttp)).json(data);
@@ -53,10 +55,11 @@ class AccountAndTransactionController {
 
     async registerCashback(req: Request, res: Response) {
         const { id } = req.params;
+        console.log('id cahsback: ', id)
         const { cashback } = req.body;
-        const transictionId = +id;
+        const transactionId = +id;
         const { statusHttp, data } = await this.accountAndTransactionService.registerCashback(
-            transictionId, cashback
+            transactionId, cashback
         );
         return res.status(mapStatusHTTP(statusHttp)).json(data);
     }

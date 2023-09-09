@@ -1,15 +1,14 @@
-import { Transaction } from "sequelize";
-import SequelizeAccount from "../database/models/SequelizeAccount";
-import SequelizeTransiction from "../database/models/SequelizeTransiction";
-import { IAccount } from "../interfaces/IAccounts";
-import { IReturnTransictions } from "../interfaces/IReturnTransictions";
-import { ITransiction } from "../interfaces/ITransiction";
-import { IReturnCashback } from "../interfaces/IReturnCashback";
-import { IAccountAndTransictionModel } from "../interfaces/IAccountAndTransictionModel";
+// import { Transaction } from 'sequelize';
+import SequelizeAccount from '../database/models/SequelizeAccount';
+import SequelizeTransaction from '../database/models/SequelizeTransaction';
+import { IAccount } from '../interfaces/IAccounts';
+import { IReturnTransactions } from '../interfaces/IReturnTransactions';
+import { IReturnCashback } from '../interfaces/IReturnCashback';
+import { IAccountAndTransactionModel } from '../interfaces/IAccountAndTransactionModel';
 
-class AccountAndTransictionModel implements IAccountAndTransictionModel {
+class AccountAndTransactionModel implements IAccountAndTransactionModel {
     private sequelizeAccount = SequelizeAccount;
-    private sequelizeTransaction = SequelizeTransiction;
+    private sequelizeTransaction = SequelizeTransaction;
 
     async createAccount(
         cpfCnpj:string, name: string, password: string, status: boolean
@@ -55,18 +54,22 @@ class AccountAndTransictionModel implements IAccountAndTransictionModel {
         value: number,
         date: Date,
     ): Promise<number> {
-        const response = await this.sequelizeTransaction.create({originAccountId, destinationAccountId, value, date});
-        return response.dataValues.transictionId;
+        const response = await this.sequelizeTransaction.create(
+            {originAccountId, destinationAccountId, value, date}
+        );
+        return response.dataValues.transactionId;
     }
 
-    async findAllTransactions(origenAccountId: number): Promise<IReturnTransictions[] | null> {
-        const response = await this.sequelizeTransaction.findAll({ where: { originAccountId: origenAccountId }});
+    async findAllTransactions(origenAccountId: number): Promise<IReturnTransactions[] | null> {
+        const response = await this.sequelizeTransaction.findAll(
+            { where: { originAccountId: origenAccountId }}
+        );
         if (!response) {
             return null;
         }
-        const transactions: IReturnTransictions[] = response
+        const transactions: IReturnTransactions[] = response
             .map((transaction) => ({
-                transictionId: transaction.dataValues.transictionId,
+                transactionId: transaction.dataValues.transactionId,
                 accountId: transaction.dataValues.destinationAccountId,
                 date: transaction.dataValues.date,
                 value: transaction.dataValues.value,
@@ -75,21 +78,22 @@ class AccountAndTransictionModel implements IAccountAndTransictionModel {
         return transactions;
     }
 
-    async registerCashback(transictionId: number, cashback: number): Promise<IReturnCashback | null> {
-        const updateTransiction = await this.sequelizeTransaction.update(
-            { cashback },
-            { where: { transictionId}}
+    async registerCashback(
+        transactionId: number, cashback: number
+    ): Promise<IReturnCashback | null> {
+        const updateTransaction = await this.sequelizeTransaction.update(
+            { cashback }, { where: { transactionId}}
         );
-        if (!updateTransiction) {
+        if (!updateTransaction) {
             return null;
         }
-        const response = await this.sequelizeTransaction.findByPk(transictionId);
-        const transictionWithCashback: IReturnCashback = {
-            transictionId: response?.dataValues.transictionId,
+        const response = await this.sequelizeTransaction.findByPk(transactionId);
+        const transactionWithCashback: IReturnCashback = {
+            transactionId: response?.dataValues.transactionId,
             cashback: response?.dataValues.cashback,
         }
-        return transictionWithCashback;
+        return transactionWithCashback;
     }
 }
 
-export default AccountAndTransictionModel;
+export default AccountAndTransactionModel;

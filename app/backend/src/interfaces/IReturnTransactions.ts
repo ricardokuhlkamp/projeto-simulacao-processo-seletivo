@@ -1,5 +1,5 @@
-export interface IReturnTransictions {
-    transictionId?: number;
+export interface IReturnTransactions {
+    transactionId?: number;
     accountId: number;
     date: Date;
     value: number;

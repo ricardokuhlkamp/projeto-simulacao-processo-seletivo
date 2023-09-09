@@ -1,38 +1,40 @@
 import { Request, Router, Response } from 'express';
 import AccountAndTransactionController from '../controllers/AccountAndTransactionController';
+import ValidateCpfCnpj from '../middlewares/ValidateCpfCnpj';
 
-const accountAndTransictionController = new AccountAndTransactionController();
+const accountAndTransactionController = new AccountAndTransactionController();
 
 const router = Router();
 
 router.post(
     '/account',
-    (req: Request, res: Response) => accountAndTransictionController.createAccount(req, res),
+    ValidateCpfCnpj.validateUserCpfOrCnpj,
+    (req: Request, res: Response) => accountAndTransactionController.createAccount(req, res),
 );
 
 router.put(
     '/account/:id',
-    (req: Request, res: Response) => accountAndTransictionController.updateAccount(req, res),
+    (req: Request, res: Response) => accountAndTransactionController.updateAccount(req, res),
 );
 
 router.get(
-    'account/:id',
-    (req: Request, res: Response) => accountAndTransictionController.findAccount(req, res),
+    '/account/:id',
+    (req: Request, res: Response) => accountAndTransactionController.findAccount(req, res),
 );
 
+router.put(
+    '/transaction/:id/cashback',
+    (req: Request, res: Response) => accountAndTransactionController.registerCashback(req, res),
+);
 router.post(
-    '/transaction',
-    (req: Request, res: Response) => accountAndTransictionController.createTransaction(req, res),
+    '/transaction/:id',
+    (req: Request, res: Response) => accountAndTransactionController.createTransaction(req, res),
 );
 
 router.get(
     '/transaction/:id',
-    (req: Request, res: Response) => accountAndTransictionController.findAllTransactions(req, res),
+    (req: Request, res: Response) => accountAndTransactionController.findAllTransactions(req, res),
 );
 
-router.put(
-    '/cashback/:id',
-    (req: Request, res: Response) => accountAndTransictionController.registerCashback(req, res),
-);
 
 export default router;

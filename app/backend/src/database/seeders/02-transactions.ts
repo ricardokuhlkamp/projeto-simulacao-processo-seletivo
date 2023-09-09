@@ -6,9 +6,9 @@ export default {
             'transactions',
             [
                 {
-                    transictionId: 1,
-                    originAccountId: 1,
-                    destinationAccountId: 2,
+                    transaction_id: 1,
+                    origin_account_id: 1,
+                    destination_account_id: 2,
                     value: 10.00,
                     date: new Date(),
                 },

@@ -1,12 +1,13 @@
-import { IAccountAndTransictionModel } from "../interfaces/IAccountAndTransictionModel";
-import { IAccount } from "../interfaces/IAccounts";
-import { IReturnCashback } from "../interfaces/IReturnCashback";
-import { IReturnTransictions } from "../interfaces/IReturnTransictions";
-import AccountAndTransictionModel from "../models/AccountAndTransactionModel";
-import { ServiceResponse } from "../types/ServiceResponse";
+import { IAccountAndTransactionModel } from '../interfaces/IAccountAndTransactionModel';
+import { IAccount } from '../interfaces/IAccounts';
+import { IReturnCashback } from '../interfaces/IReturnCashback';
+import { IReturnTransactions } from '../interfaces/IReturnTransactions';
+import AccountAndTransactionModel from '../models/AccountAndTransactionModel';
+import { ServiceResponse } from '../types/ServiceResponse';
 
 class AccountAndTransactionService {
-    private accountAndTransactionModel: IAccountAndTransictionModel = new AccountAndTransictionModel();
+    private accountAndTransactionModel: 
+        IAccountAndTransactionModel = new AccountAndTransactionModel();
 
     public async createAccount(
         cpfCnpj:string, name: string, password: string, status: boolean
@@ -57,7 +58,7 @@ class AccountAndTransactionService {
 
     public async findAllTransactions(
         origenAccountId: number
-    ): Promise<ServiceResponse<IReturnTransictions[] | null>> {
+    ): Promise<ServiceResponse<IReturnTransactions[] | null>> {
         const response = await this.accountAndTransactionModel.findAllTransactions(
             origenAccountId
         );
@@ -68,10 +69,10 @@ class AccountAndTransactionService {
     }
 
     public async registerCashback(
-        transictionId: number, cashback: number
+        transactionId: number, cashback: number
     ): Promise<ServiceResponse<IReturnCashback | null>> {
         const response = await this.accountAndTransactionModel.registerCashback(
-            transictionId, cashback
+            transactionId, cashback
         );
         if (!response) {
             return { statusHttp: 'NOT_FOUND', data: { message: 'account not found' } };

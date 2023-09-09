@@ -6,15 +6,15 @@ export default {
             'accounts',
             [
                 {
-                    accountId: 1,
-                    cpfCnpj: '01234567890',
+                    account_id: 1,
+                    cpf_cnpj: '01234567890',
                     name: 'Fulano',
                     password: '1234',
                     status: true,
                 },
                 {
-                    accountId: 2,
-                    cpfCnpj: '11234567806',
+                    account_id: 2,
+                    cpf_cnpj: '11234567806',
                     name: 'Ciclano',
                     password: '4321',
                     status: true,

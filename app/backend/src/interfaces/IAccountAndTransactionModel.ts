@@ -1,8 +1,8 @@
 import { IAccount } from './IAccounts';
 import { IReturnCashback } from './IReturnCashback';
-import { IReturnTransictions } from './IReturnTransictions';
+import { IReturnTransactions } from './IReturnTransactions';
 
-export interface IAccountAndTransictionModel {
+export interface IAccountAndTransactionModel {
     createAccount(
         cpfCnpj:string, name: string, password: string, status: boolean
     ): Promise<number>,
@@ -16,6 +16,6 @@ export interface IAccountAndTransictionModel {
         value: number,
         date: Date,
     ): Promise<number>,
-    findAllTransactions(origenAccountId: number): Promise<IReturnTransictions[] | null>,
-    registerCashback(transictionId: number, cashback: number): Promise<IReturnCashback | null>,
+    findAllTransactions(origenAccountId: number): Promise<IReturnTransactions[] | null>,
+    registerCashback(transactionId: number, cashback: number): Promise<IReturnCashback | null>,
 }

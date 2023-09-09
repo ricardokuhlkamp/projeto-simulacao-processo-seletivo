@@ -8,11 +8,11 @@ import {
 import db from '.';
 import SequelizeAccount from './SequelizeAccount';
 
-class SequelizeTransiction extends Model<
-InferAttributes<SequelizeTransiction>,
-InferCreationAttributes<SequelizeTransiction>
+class SequelizeTransaction extends Model<
+InferAttributes<SequelizeTransaction>,
+InferCreationAttributes<SequelizeTransaction>
 > {
-    declare transictionId: CreationOptional<number>;
+    declare transactionId: CreationOptional<number>;
     declare originAccountId: number;
     declare destinationAccountId: number;
     declare value: number;
@@ -20,8 +20,8 @@ InferCreationAttributes<SequelizeTransiction>
     declare cashback: CreationOptional<number>;
 }
 
-SequelizeTransiction.init({
-    transictionId: {
+SequelizeTransaction.init({
+    transactionId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         autoIncrement: true,
@@ -49,19 +49,19 @@ SequelizeTransiction.init({
     },
 }, {
     sequelize: db,
-    modelName: 'transictions',
+    modelName: 'transactions',
     timestamps: false,
     underscored: true,
 });
 
-SequelizeTransiction.belongsTo(SequelizeAccount, {
+SequelizeTransaction.belongsTo(SequelizeAccount, {
     foreignKey: 'originAccountId',
     as: 'originAccount',
 });
   
-SequelizeTransiction.belongsTo(SequelizeAccount, {
+SequelizeTransaction.belongsTo(SequelizeAccount, {
     foreignKey: 'destinationAccountId',
     as: 'destinationAccount',
 });
 
-export default SequelizeTransiction;
+export default SequelizeTransaction;

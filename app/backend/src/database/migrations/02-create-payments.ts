@@ -1,16 +1,16 @@
-import { Model, QueryInterface, DataTypes, Sequelize } from 'sequelize';
-import { ITransiction } from '../../interfaces/ITransiction';
+import { Model, QueryInterface, DataTypes } from 'sequelize';
+import { ITransaction } from '../../interfaces/ITransaction';
 
 export default {
     // eslint-disable-next-line max-lines-per-function
     up(queryInterface: QueryInterface) {
-        return queryInterface.createTable<Model<ITransiction>>('transictions', {
-            transictionId: {
+        return queryInterface.createTable<Model<ITransaction>>('transactions', {
+            transactionId: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                field: 'transiction_id'
+                field: 'transaction_id'
             },
             originAccountId: {
                 type: DataTypes.INTEGER,
@@ -40,6 +40,6 @@ export default {
         });
     },
     down(queryInterface: QueryInterface) {
-        return queryInterface.dropTable('transictions');
+        return queryInterface.dropTable('transactions');
     },
 };

@@ -1,5 +1,5 @@
-export interface ITransiction {
-    transictionId?: number;
+export interface ITransaction {
+    transactionId?: number;
     originAccountId: number;
     destinationAccountId: number;
     value: number;

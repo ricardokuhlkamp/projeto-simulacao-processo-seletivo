@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import { Model, QueryInterface, DataTypes } from 'sequelize';
 
 import { IAccount } from '../../interfaces/IAccounts';
@@ -16,7 +17,7 @@ export default {
             cpfCnpj: {
                 type: DataTypes.STRING,
                 allowNull: false,
-                field: 'cpf_cpnj'
+                field: 'cpf_cnpj'
             },
             name: {
                 type: DataTypes.STRING,
